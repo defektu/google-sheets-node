@@ -94,4 +94,4 @@ app.post("/", async (req, res) => {
   console.log(name, email, id);
 });
 
-app.listen(8080, () => console.log("running on 8080"));
+app.listen(80, () => console.log("running on 80"));
