@@ -193,7 +193,8 @@
 		<div class="d-flex flex-column justify-content-start p-3" style="width: 100%; height: 100%; margin-top: 20vh">
 			<h1>Trumore Avatar</h1>
 			<p class="mb-5">Your Digital Twin Footage is ready.<br />Send it to your e-mail.</p>
-			<form action="" id="postForm" method="POST" class="d-flex flex-column" style="margin-bottom: 48px">
+			<form action="" id="postForm" action="/api" method="GET" class="d-flex flex-column"
+				style="margin-bottom: 48px">
 				<input type="text" id="name" name="name" placeholder="Full Name (optional)" />
 				<input type="text" id="email" name="email" placeholder="E-Mail" style="margin-top: 16px" />
 				<input type="hidden" id="id" name="id" value=>
@@ -222,6 +223,7 @@
 		var form = document.getElementById('postForm')
 		var idElement = document.getElementById('id')
 		idElement.value = queries.id
+		form.action = 'api';
 		form.submit()
 	}
 </script>

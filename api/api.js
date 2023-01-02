@@ -1,40 +1,16 @@
-const express = require("express");
 require("dotenv").config();
 const { google } = require("googleapis");
-
-const api = require("./api/api");
-
-const app = express();
-// app.set("view engine", "ejs");
-app.use(express.static("public"));
-
-app.use(express.json({ extended: false }));
-// app.use("/api", api);
-
-// app.use(express.urlencoded({ extended: true }));
-
-app.get("/", function (request, response) {
-  response.sendFile(__dirname + "/index.html");
-});
+const express = require("express");
+const router = express.Router();
 
 const CREDS = JSON.parse(process.env.CREDS || {});
 const spreadsheetId = process.env.SPREADSHEET;
 credentials = CREDS;
 
-app.get("/api/users", function (req, res) {
-  const user_id = req.query.id;
-  const token = req.query.token;
-  const geo = req.query.geo;
-
-  res.send({
-    user_id: user_id,
-    token: token,
-    geo: geo,
-  });
-});
-
-app.get("/api", async (req, res) => {
-  const { name, email, id } = req.query;
+router.get("/", async (req, res) => {
+  //   return res.status(200).send(req);
+  const { name, email, id } = req.body;
+  console.log(req.body);
   console.log(name, email, id);
   if (id == null || id == "undefined") {
     res.status(418).send("need id");
@@ -88,10 +64,4 @@ app.get("/api", async (req, res) => {
   return res.status(200).send("Successfully submitted! Thank you!");
 });
 
-app.post("/", async (req, res) => {
-  const { name, email, id } = req.body;
-  console.log("wtf");
-  console.log(name, email, id);
-});
-
-app.listen(8080, () => console.log("running on 8080"));
+module.exports = router;
