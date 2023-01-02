@@ -14,7 +14,7 @@ app.use(express.json({ extended: false }));
 // app.use(express.urlencoded({ extended: true }));
 
 app.get("/", function (request, response) {
-  response.sendFile(__dirname + "/index.html");
+  response.sendFile("/index.html");
 });
 
 const CREDS = JSON.parse(process.env.CREDS || {});
