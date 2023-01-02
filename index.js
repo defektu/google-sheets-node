@@ -88,10 +88,4 @@ app.get("/api", async (req, res) => {
   return res.status(200).send("Successfully submitted! Thank you!");
 });
 
-app.post("/", async (req, res) => {
-  const { name, email, id } = req.body;
-  console.log("wtf");
-  console.log(name, email, id);
-});
-
 app.listen(3000, () => console.log("running on 3000"));
