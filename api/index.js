@@ -2,8 +2,6 @@ const express = require("express");
 require("dotenv").config();
 const { google } = require("googleapis");
 
-const api = require("./api/api");
-
 const app = express();
 // app.set("view engine", "ejs");
 app.use(express.static("public"));
