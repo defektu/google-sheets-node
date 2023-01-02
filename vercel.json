@@ -3,7 +3,7 @@
 	"name" : "express",
 	"builds": [
 		{
-			"src": "./index.js",
+			"src": "api/index.js",
 			"use": "@vercel/node"
 			
 		},
@@ -16,7 +16,7 @@
 	"routes": [
 		{
 			"src": "/api/(.*)",
-			"dest": "index.js"
+			"dest": "api/index.js"
 		  },
 		{
             "src": "/",
