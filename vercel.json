@@ -8,15 +8,12 @@
 			
 		},
 		{
-            "src": "public/**",
-            "use": "@vercel/static"
-        }
+			"src": "public/**",
+			"use": "@vercel/static",
+			"config": { "includeFiles": ["public/**"] }
+		  }
 	],
 	"routes": [
-		{
-			"src": "/(.*)",
-			"dest": "/"
-		},
 		{
             "src": "/",
             "dest": "public/index.html"
