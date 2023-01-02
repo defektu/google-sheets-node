@@ -1,19 +1,37 @@
 const express = require("express");
 const { google } = require("googleapis");
 
+require("dotenv").config();
+
 const app = express();
-app.set("view engine", "ejs");
+// app.set("view engine", "ejs");
+app.use(express.static("public"));
+
 app.use(express.urlencoded({ extended: true }));
 
-app.get("/", (req, res) => {
-  res.render("index");
+app.get("/", function (request, response) {
+  response.sendFile(__dirname + "/index.html");
 });
 
+const CREDS = JSON.parse(process.env.CREDS || {});
+const spreadsheetId = process.env.SPREADSHEET;
+credentials = CREDS;
+
 app.post("/", async (req, res) => {
-  const { request, name } = req.body;
+  const { name, email, id } = req.body;
+  if (id == null || id == "undefined") {
+    res.send("need id");
+    return;
+  }
+
+  if (email == "undefined" || email == "") {
+    res.send("need email");
+    return;
+  }
 
   const auth = new google.auth.GoogleAuth({
-    keyFile: "credentials.json",
+    // keyFile: CREDS,
+    credentials: credentials,
     scopes: "https://www.googleapis.com/auth/spreadsheets",
   });
 
@@ -23,7 +41,7 @@ app.post("/", async (req, res) => {
   // Instance of Google Sheets API
   const googleSheets = google.sheets({ version: "v4", auth: client });
 
-  const spreadsheetId = "1J5OesnSTJCgLTTA0hQ_QSk_UPVK1nwRTEkvvRHHrEqM";
+  //   const spreadsheetId = "1jZuEYjohuU0UFTyfZZEtWDwnId2rL9on2s0xxE03-G4";
 
   // Get metadata about spreadsheet
   const metaData = await googleSheets.spreadsheets.get({
@@ -42,10 +60,10 @@ app.post("/", async (req, res) => {
   await googleSheets.spreadsheets.values.append({
     auth,
     spreadsheetId,
-    range: "Sheet1!A:B",
+    range: "Sheet1!A:C",
     valueInputOption: "USER_ENTERED",
     resource: {
-      values: [[request, name]],
+      values: [[id, email, name]],
     },
   });
 

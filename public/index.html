@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0 , virtual-keyboard=overlays-content" />
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+		integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous" />
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+		crossorigin="anonymous"></script>
+	<title>Trumore</title>
+	<style>
+		@font-face {
+			font-family: 'FedraSansPro';
+			font-style: normal;
+			font-weight: 600;
+			src: url('./assets/fonts/FedraSansPro/Medium.otf');
+		}
+
+		@font-face {
+			font-family: 'FedraSansPro';
+			font-style: normal;
+			font-weight: normal;
+			src: url('./assets/fonts/FedraSansPro/Book.otf');
+		}
+
+		@font-face {
+			font-family: 'FedraSansPro';
+			font-style: normal;
+			font-weight: 500;
+			src: url('../assets/fonts/FedraSansPro/Demi.otf');
+		}
+
+		@font-face {
+			font-family: 'FedraSansPro';
+			font-style: normal;
+			font-weight: bold;
+			src: url('../assets/fonts/FedraSansPro/Bold.otf');
+		}
+
+		@font-face {
+			font-family: 'FedraSansPro';
+			font-style: normal;
+			font-weight: 300;
+			src: url('../assets/fonts/FedraSansPro/Light.otf');
+		}
+
+		html,
+		body {
+			font-family: 'FedraSansPro', sans-serif;
+		}
+
+		body {
+			background: url('assets/bg.png'), #000033;
+			background-attachment: fixed;
+			background-size: cover;
+		}
+
+		* {
+			outline: none;
+			border: none;
+			color: #fff;
+		}
+
+		input {
+			background: rgba(255, 255, 255, 0.15);
+			border-radius: 6px;
+			padding: 16px;
+			border: 1px solid transparent;
+		}
+
+		::placeholder {
+			color: rgba(255, 255, 255, 0.6);
+		}
+
+		input:focus {
+			border-color: #fff;
+		}
+
+		button {
+			padding: 16px;
+			border-radius: 6px;
+			background-color: #0072db;
+		}
+
+		.c-footer {
+			position: absolute;
+			bottom: 0;
+			margin-bottom: 34px;
+			padding: 28px;
+			width: 100%;
+			height: fit-content;
+			background-color: transparent;
+			text-align: right;
+		}
+
+		.background-glowing {
+			position: absolute;
+			animation-duration: 6s;
+			animation-delay: 2s !important;
+			width: 50vw;
+			height: 50vw;
+			z-index: -1;
+		}
+
+		.background-glowing-1 {
+			top: 30%;
+			left: 30%;
+			background: #ff5900;
+			filter: blur(113.5px);
+			transform: rotate(7.18deg);
+			animation: positioning 10s ease-in-out infinite;
+		}
+
+		@keyframes positioning {
+			0% {
+				top: 30%;
+				left: 30%;
+			}
+
+			50% {
+				top: 30%;
+				left: 40%;
+			}
+
+			100% {
+				top: 30%;
+				left: 30%;
+			}
+		}
+
+		.background-glowing-2 {
+			top: 30%;
+			left: 40%;
+			background: #0cc1e6;
+			filter: blur(113.5px);
+			transform: rotate(7.18deg);
+			animation: positioning-2 10s ease-in-out infinite;
+		}
+
+		@keyframes positioning-2 {
+			0% {
+				top: 30%;
+				left: 40%;
+			}
+
+			50% {
+				top: 30%;
+				left: 30%;
+			}
+
+			100% {
+				top: 30%;
+				left: 40%;
+			}
+		}
+
+		.background-glowing-3 {
+			top: 40%;
+			left: 35%;
+			background: #9d19ea;
+			filter: blur(113.5px);
+			transform: rotate(-87.43deg);
+			animation: positioning-3 10s ease-in-out infinite;
+		}
+
+		@keyframes positioning-3 {
+			0% {
+				top: 40%;
+				left: 35%;
+			}
+
+			50% {
+				top: 30%;
+				left: 40%;
+			}
+
+			100% {
+				top: 40%;
+				left: 35%;
+			}
+		}
+	</style>
+</head>
+
+<body>
+	<div class="background-glowing-1 background-glowing"></div>
+	<div class="background-glowing-2 background-glowing"></div>
+	<div class="background-glowing-3 background-glowing"></div>
+	<div class="container mx-auto my-auto" style="height: 100vh">
+		<div class="d-flex flex-column justify-content-start p-3" style="width: 100%; height: 100%; margin-top: 20vh">
+			<h1>Trumore Avatar</h1>
+			<p class="mb-5">Your Digital Twin Footage is ready.<br />Send it to your e-mail.</p>
+			<form action="" id="postForm" method="POST" class="d-flex flex-column" style="margin-bottom: 48px">
+				<input type="text" id="name" name="name" placeholder="Full Name (optional)" />
+				<input type="text" id="email" name="email" placeholder="E-Mail" style="margin-top: 16px" />
+				<input type="hidden" id="id" name="id" value=>
+			</form>
+			<button type="button" onClick="submitForm()">Submit</button>
+		</div>
+	</div>
+	<footer class="c-footer">
+		<img src="./assets/logo.png" />
+	</footer>
+</body>
+<script>
+	function getParams(url = window.location) {
+		// Create a params object
+		let params = {}
+
+		new URL(url).searchParams.forEach(function (val, key) {
+			params[key] = val
+		})
+
+		return params
+	}
+
+	function submitForm() {
+		var queries = getParams()
+		var form = document.getElementById('postForm')
+		var idElement = document.getElementById('id')
+		idElement.value = queries.id
+		form.submit()
+	}
+</script>
+
+</html>
