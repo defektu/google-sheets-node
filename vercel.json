@@ -15,6 +15,10 @@
 	],
 	"routes": [
 		{
+			"src": "/(.*)",
+			"dest": "/"
+		},
+		{
             "src": "/",
             "dest": "public/index.html"
         },

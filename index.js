@@ -94,4 +94,4 @@ app.post("/", async (req, res) => {
   console.log(name, email, id);
 });
 
-app.listen(80, () => console.log("running on 80"));
+app.listen(3000, () => console.log("running on 3000"));
