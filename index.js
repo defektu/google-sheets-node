@@ -1,6 +1,7 @@
 const express = require("express");
 require("dotenv").config();
 const { google } = require("googleapis");
+const { GoogleAuth } = require("google-auth-library");
 
 const app = express();
 // app.set("view engine", "ejs");
@@ -11,10 +12,6 @@ app.use(express.json({ extended: false }));
 app.get("/", function (request, response) {
   response.sendFile("/index.html");
 });
-
-// app.get("/success", function (request, response) {
-//   response.redirect("success.html");
-// });
 
 const CREDS = JSON.parse(process.env.CREDS || {});
 const spreadsheetId = process.env.SPREADSHEET;
@@ -50,7 +47,8 @@ app.get("/api", async (req, res) => {
   const auth = new google.auth.GoogleAuth({
     // keyFile: CREDS,
     credentials: credentials,
-    scopes: "https://www.googleapis.com/auth/spreadsheets",
+    scopes:
+      "https://www.googleapis.com/auth/spreadsheets https://www.googleapis.com/auth/drive",
   });
 
   // Create client instance for auth
@@ -59,34 +57,30 @@ app.get("/api", async (req, res) => {
   // Instance of Google Sheets API
   const googleSheets = google.sheets({ version: "v4", auth: client });
 
-  //   const spreadsheetId = "1jZuEYjohuU0UFTyfZZEtWDwnId2rL9on2s0xxE03-G4";
-
-  // Get metadata about spreadsheet
-  const metaData = await googleSheets.spreadsheets.get({
-    auth,
-    spreadsheetId,
+  const googleDrive = google.drive({ version: "v3", auth: client });
+  const fileData = await googleDrive.files.list({
+    q: "name='" + id + ".mov'",
   });
 
-  // Read rows from spreadsheet
-  const getRows = await googleSheets.spreadsheets.values.get({
-    auth,
-    spreadsheetId,
-    range: "Sheet1!A:A",
-  });
+  let fileUrl;
+  if (fileData.data.files[0]?.id) {
+    fileUrl = "https://drive.google.com/file/d/" + fileData.data.files[0].id;
+  } else {
+    fileUrl =
+      "https://drive.google.com/drive/folders/1-1OWG1x5NHCCyYQVQC9Es-iv6DxR3oNI?usp=sharing";
+  }
 
   // Write row(s) to spreadsheet
   await googleSheets.spreadsheets.values.append({
     auth,
     spreadsheetId,
-    range: "Sheet1!A:C",
+    range: "Sheet1!A:D",
     valueInputOption: "USER_ENTERED",
     resource: {
-      values: [[id, email, name]],
+      values: [[id, email, name, fileUrl]],
     },
   });
-  //   router.send("Successfully submitted! Thank you!");
   return res.redirect("/success.html");
-  //   return res.status(200).sendFile("./success.html");
 });
 
 app.listen(3000, () => console.log("running on 3000"));
