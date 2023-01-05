@@ -243,7 +243,7 @@
 				<input type="email" id="email" name="email" placeholder="E-Mail" style="margin-top: 16px" required />
 				<input type="hidden" id="id" name="id" value=>
 			</form>
-			<input type="button" id="submitButton" onClick="submitForm()" value="Submit"></input>
+			<button type="button" id="submitButton" onClick="submitForm()">Submit</input>
 		</div>
 	</div>
 	<footer class="c-footer">
@@ -269,30 +269,23 @@
 		var nameElement = document.getElementById('name')
 		var emailElement = document.getElementById('email')
 
-		emailElement.addEventListener('animationend', () => {
-			emailElement.style.animation = '';
-		})
 		if (emailElement.checkValidity()) {
 			emailElement.style.borderColor = 'green';
 		} else {
 			emailElement.style.borderColor = 'red';
-			// emailElement.addClass('animated shake');
-			// emailElement.className = "animated shake"
-			emailElement.style.animation = 'error-shake 0.4s'
 			return
 		}
 
-
-
-
 		var buttonElement = document.getElementById('submitButton')
-		nameElement.disabled = true
-		emailElement.disabled = true
-		buttonElement.disabled = true
 		buttonElement.value = "Submitting..."
+		buttonElement.disabled = true
+		// nameElement.disabled = true
+		// emailElement.disabled = true
 		idElement.value = queries.id
+		console.log(form)
 		form.action = 'api';
 		form.submit()
+
 	}
 </script>
 
