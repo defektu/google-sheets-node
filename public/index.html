@@ -71,6 +71,18 @@
 			border: 1px solid transparent;
 		}
 
+		input[type=button] {
+			padding: 16px;
+			border-radius: 6px;
+			background-color: #0072db;
+		}
+
+		input[type=button]:disabled,
+		input[type=button][disabled] {
+			background-color: #cccccc;
+			color: #666666;
+		}
+
 		::placeholder {
 			color: rgba(255, 255, 255, 0.6);
 		}
@@ -83,6 +95,12 @@
 			padding: 16px;
 			border-radius: 6px;
 			background-color: #0072db;
+		}
+
+		button:disabled,
+		button[disabled] {
+			background-color: #cccccc;
+			color: #666666;
 		}
 
 		.c-footer {
@@ -182,6 +200,32 @@
 				left: 35%;
 			}
 		}
+
+		@keyframes error-shake {
+
+			from,
+			to {
+				-webkit-transform: translate3d(0, 0, 0);
+				transform: translate3d(0, 0, 0);
+			}
+
+			10%,
+			30%,
+			50%,
+			70%,
+			90% {
+				-webkit-transform: translate3d(-5px, 0, 0);
+				transform: translate3d(-5px, 0, 0);
+			}
+
+			20%,
+			40%,
+			60%,
+			80% {
+				-webkit-transform: translate3d(5px, 0, 0);
+				transform: translate3d(5px, 0, 0);
+			}
+		}
 	</style>
 </head>
 
@@ -196,10 +240,10 @@
 			<form action="" id="postForm" action="/api" method="GET" class="d-flex flex-column"
 				style="margin-bottom: 48px">
 				<input type="text" id="name" name="name" placeholder="Full Name (optional)" />
-				<input type="text" id="email" name="email" placeholder="E-Mail" style="margin-top: 16px" />
+				<input type="email" id="email" name="email" placeholder="E-Mail" style="margin-top: 16px" required />
 				<input type="hidden" id="id" name="id" value=>
 			</form>
-			<button type="button" onClick="submitForm()">Submit</button>
+			<input type="button" id="submitButton" onClick="submitForm()" value="Submit"></input>
 		</div>
 	</div>
 	<footer class="c-footer">
@@ -222,6 +266,30 @@
 		var queries = getParams()
 		var form = document.getElementById('postForm')
 		var idElement = document.getElementById('id')
+		var nameElement = document.getElementById('name')
+		var emailElement = document.getElementById('email')
+
+		emailElement.addEventListener('animationend', () => {
+			emailElement.style.animation = '';
+		})
+		if (emailElement.checkValidity()) {
+			emailElement.style.borderColor = 'green';
+		} else {
+			emailElement.style.borderColor = 'red';
+			// emailElement.addClass('animated shake');
+			// emailElement.className = "animated shake"
+			emailElement.style.animation = 'error-shake 0.4s'
+			return
+		}
+
+
+
+
+		var buttonElement = document.getElementById('submitButton')
+		nameElement.disabled = true
+		emailElement.disabled = true
+		buttonElement.disabled = true
+		buttonElement.value = "Submitting..."
 		idElement.value = queries.id
 		form.action = 'api';
 		form.submit()
