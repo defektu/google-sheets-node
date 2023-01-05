@@ -34,13 +34,13 @@ app.get("/api/users", function (req, res) {
 app.get("/api", async (req, res) => {
   const { name, email, id } = req.query;
   console.log(name, email, id);
-  if (id == null || id == "undefined") {
-    res.status(418).send("need id");
+  if (id == null || id == "undefined" || id == "") {
+    res.status(400).send("need id");
     return;
   }
 
-  if (email == "undefined" || email == "") {
-    res.status(418).send("need email");
+  if (email == null || email == "undefined" || email == "") {
+    res.status(400).send("need email");
     return;
   }
 
